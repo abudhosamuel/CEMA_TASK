@@ -12,7 +12,7 @@ function App() {
         <Link to="/register">Register Client</Link> | 
         <Link to="/program">Create Program</Link> | 
         <Link to="/enroll">Enroll Client</Link> | 
-        <Link to="/view">View Profile</Link> |
+        <Link to="/view">View Profil</Link> |
         <Link to="/search">Search Client</Link> |
       </nav>
       <Routes>
