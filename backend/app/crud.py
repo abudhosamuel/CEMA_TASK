@@ -19,10 +19,13 @@ def enroll_client(db: Session, client_id: int, program_id: int):
     client = db.query(models.Client).filter(models.Client.id == client_id).first()
     program = db.query(models.Program).filter(models.Program.id == program_id).first()
     if client and program:
+        if program in client.programs:
+            return "already_enrolled"
         client.programs.append(program)
         db.commit()
         return client
     return None
+
 
 def get_client_profile(db: Session, client_id: int):
     return db.query(models.Client).filter(models.Client.id == client_id).first()

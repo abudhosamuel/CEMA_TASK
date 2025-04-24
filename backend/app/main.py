@@ -33,10 +33,13 @@ def register_client(name: str, age: int, db: Session = Depends(get_db)):
 
 @app.post("/clients/{client_id}/enroll")
 def enroll_client(client_id: int, program_id: int, db: Session = Depends(get_db)):
-    client = crud.enroll_client(db, client_id, program_id)
-    if not client:
+    result = crud.enroll_client(db, client_id, program_id)
+    if result == "already_enrolled":
+        raise HTTPException(status_code=400, detail="Client is already enrolled in this program")
+    if not result:
         raise HTTPException(status_code=404, detail="Client or Program not found")
     return {"msg": f"Client {client_id} enrolled in Program {program_id}"}
+
 
 @app.get("/clients/{client_id}")
 def get_client_profile(client_id: int, db: Session = Depends(get_db)):
@@ -54,3 +57,14 @@ def get_client_profile(client_id: int, db: Session = Depends(get_db)):
 def search_clients(name: str, db: Session = Depends(get_db)):
     clients = crud.search_clients(db, name)
     return [{"id": c.id, "name": c.name, "age": c.age} for c in clients]
+
+@app.get("/clients")
+def list_clients(db: Session = Depends(get_db)):
+    clients = db.query(models.Client).all()
+    return [{"id": c.id, "name": c.name} for c in clients]
+
+@app.get("/programs")
+def list_programs(db: Session = Depends(get_db)):
+    programs = db.query(models.Program).all()
+    return [{"id": p.id, "name": p.name} for p in programs]
+
