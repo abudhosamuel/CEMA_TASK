@@ -8,13 +8,19 @@ import SearchClient from './components/SearchClient';
 function App() {
   return (
     <Router>
-      <nav>
-        <Link to="/register">Register Client</Link> | 
-        <Link to="/program">Create Program</Link> | 
-        <Link to="/enroll">Enroll Client</Link> | 
-        <Link to="/view">View Profile</Link> |
-        <Link to="/search">Search Client</Link> |
-      </nav>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+  <div className="container">
+    <a className="navbar-brand" href="/">Health Information System</a>
+    <div>
+      <Link className="btn btn-outline-light mx-2" to="/register">Register Client</Link>
+      <Link className="btn btn-outline-light mx-2" to="/program">Create Program</Link>
+      <Link className="btn btn-outline-light mx-2" to="/enroll">Enroll Client</Link>
+      <Link className="btn btn-outline-light mx-2" to="/view">View Profile</Link>
+      <Link className="btn btn-outline-light mx-2" to="/search">Search Client</Link>
+    </div>
+  </div>
+</nav>
+
       <Routes>
         <Route path="/register" element={<RegisterClient />} />
         <Route path="/program" element={<CreateProgram />} />
