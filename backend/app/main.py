@@ -1,27 +1,45 @@
 from fastapi import FastAPI, Depends, HTTPException
-from sqlalchemy.orm import Session
-from app import models, database, crud
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+from sqlalchemy.orm import Session
+import os
 
-models.Base.metadata.create_all(bind=database.engine)
+# Import your database and CRUD logic
+from app import models, database, crud
 
+# Initialize FastAPI app
 app = FastAPI(title="Health Information System")
 
-# CORS for React frontend
+# Setup CORS (allow frontend to access API)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["*"],   # For demo purposes. In production, specify your frontend URL.
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+# Create DB tables
+models.Base.metadata.create_all(bind=database.engine)
+
+# Dependency to get DB session
 def get_db():
     db = database.SessionLocal()
     try:
         yield db
     finally:
         db.close()
+
+# ========= Serve React Frontend =========
+app.mount("/static", StaticFiles(directory="frontend_static/static"), name="static")
+
+@app.get("/")
+def serve_react():
+    return FileResponse('frontend_static/index.html')
+
+
+# ========= API Endpoints =========
 
 @app.post("/programs")
 def create_program(name: str, db: Session = Depends(get_db)):
@@ -39,7 +57,6 @@ def enroll_client(client_id: int, program_id: int, db: Session = Depends(get_db)
     if not result:
         raise HTTPException(status_code=404, detail="Client or Program not found")
     return {"msg": f"Client {client_id} enrolled in Program {program_id}"}
-
 
 @app.get("/clients/{client_id}")
 def get_client_profile(client_id: int, db: Session = Depends(get_db)):
@@ -68,3 +85,4 @@ def list_programs(db: Session = Depends(get_db)):
     programs = db.query(models.Program).all()
     return [{"id": p.id, "name": p.name} for p in programs]
 
+# ========= End of API =========
