@@ -1,31 +1,34 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
 
 function CreateProgram() {
-  const [programName, setProgramName] = useState('');
+  const [name, setName] = useState('');
   const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://127.0.0.1:8000/programs', null, { params: { name: programName } });
-      setMessage('Program Created Successfully!');
-      setProgramName('');
+      await axios.post(`${API_BASE_URL}/programs`, null, {
+        params: { name }
+      });
+      setMessage('✅ Program created successfully!');
+      setMessageType('success');
+      setName('');
     } catch (err) {
-      setMessage('Error creating program.');
+      setMessage('❌ Failed to create program.');
+      setMessageType('danger');
     }
   };
 
   return (
     <div className="container mt-5">
       <h2 className="mb-4 text-center">Create Health Program</h2>
-      {message && <div className="alert alert-info">{message}</div>}
+      {message && <div className={`alert alert-${messageType}`}>{message}</div>}
       <form onSubmit={handleSubmit} className="card p-4 shadow-sm">
-        <div className="mb-3">
-          <label className="form-label">Program Name</label>
-          <input type="text" className="form-control" value={programName} onChange={(e) => setProgramName(e.target.value)} required />
-        </div>
-        <button type="submit" className="btn btn-primary w-100">Create Program</button>
+        <input type="text" className="form-control mb-3" placeholder="Program Name" value={name} onChange={(e) => setName(e.target.value)} required />
+        <button type="submit" className="btn btn-success w-100">Create Program</button>
       </form>
     </div>
   );

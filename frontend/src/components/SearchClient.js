@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
 
 function SearchClient() {
   const [query, setQuery] = useState('');
@@ -9,25 +10,25 @@ function SearchClient() {
 
   const handleSearch = async () => {
     if (!query.trim()) {
-      setMessage('Please enter a client name to search');
+      setMessage('❌ Please enter a client name to search.');
       setMessageType('danger');
       setResults([]);
       return;
     }
 
     try {
-      const res = await axios.get(`http://127.0.0.1:8000/clients/search/`, { params: { name: query } });
+      const res = await axios.get(`${API_BASE_URL}/clients/search/`, { params: { name: query } });
       if (res.data.length === 0) {
-        setMessage(`No clients found matching "${query}"`);
+        setMessage(`No clients found matching "${query}".`);
         setMessageType('danger');
         setResults([]);
       } else {
         setResults(res.data);
-        setMessage(`Found ${res.data.length} client(s) matching "${query}"`);
+        setMessage(`Found ${res.data.length} client(s) matching "${query}".`);
         setMessageType('success');
       }
     } catch (err) {
-      setMessage('❌ Error searching for clients');
+      setMessage('❌ Error searching for clients.');
       setMessageType('danger');
       setResults([]);
     }
@@ -57,7 +58,7 @@ function SearchClient() {
         <ul className="list-group">
           {results.map(client => (
             <li key={client.id} className="list-group-item">
-              <strong>{client.name}</strong> (Age: {client.age}) — ID: {client.id}
+              <strong>{client.name}</strong> (Age: {client.age})
             </li>
           ))}
         </ul>
