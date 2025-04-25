@@ -67,3 +67,6 @@ cd frontend
 npm install  
 npm start
 
+## Deployment
+
+https://cema-task-1.onrender.com
