@@ -45,7 +45,7 @@ function SearchClient() {
           value={query} 
           onChange={(e) => setQuery(e.target.value)} 
         />
-        <button className="btn btn-secondary" onClick={handleSearch}>Search</button>
+        <button className="btn btn-primary" onClick={handleSearch}>Search</button>
       </div>
 
       {message && (

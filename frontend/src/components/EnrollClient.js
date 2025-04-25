@@ -64,7 +64,7 @@ function EnrollClient() {
             <option key={program.id} value={program.name}>{program.name}</option>
           ))}
         </select>
-        <button type="submit" className="btn btn-warning w-100">Enroll Client</button>
+        <button type="submit" className="btn btn-primary w-100">Enroll Client</button>
       </form>
     </div>
   );

@@ -51,7 +51,7 @@ function ViewClientProfile() {
             <option key={client.id} value={client.name}>{client.name}</option>
           ))}
         </select>
-        <button className="btn btn-info w-100" onClick={handleViewProfile}>View Profile</button>
+        <button className="btn btn-primary w-100" onClick={handleViewProfile}>View Profile</button>
       </div>
 
       {profile && (

@@ -28,7 +28,7 @@ function CreateProgram() {
       {message && <div className={`alert alert-${messageType}`}>{message}</div>}
       <form onSubmit={handleSubmit} className="card p-4 shadow-sm">
         <input type="text" className="form-control mb-3" placeholder="Program Name" value={name} onChange={(e) => setName(e.target.value)} required />
-        <button type="submit" className="btn btn-success w-100">Create Program</button>
+        <button type="submit" className="btn btn-primary w-100">Create Program</button>
       </form>
     </div>
   );
