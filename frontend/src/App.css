@@ -1,38 +1,54 @@
-.App {
-  text-align: center;
+/* ===== Global Reset ===== */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* ===== Navbar Adjustments (Optional) ===== */
+.navbar {
+  margin-bottom: 0;   /* Remove default bottom margin */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* ===== Background Container ===== */
+.background-container {
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* ===== Dark Overlay ===== */
+.overlay {
+  background-color: rgba(0, 0, 0, 0.5);  /* Adjust opacity here */
+  width: 100%;
+  height: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+/* ===== Centered Text Content ===== */
+.content-box {
   color: white;
+  text-align: center;
+  padding: 20px;
 }
 
-.App-link {
-  color: #61dafb;
+/* ===== Responsive Headings ===== */
+.content-box h1 {
+  font-size: 3rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.content-box p {
+  font-size: 1.2rem;
+}
+
+/* ===== Button Styling (if needed globally) ===== */
+.btn {
+  border-radius: 5px;
 }
